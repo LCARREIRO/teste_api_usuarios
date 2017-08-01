@@ -1,0 +1,51 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<TesteListagemDeUsuarios.Web.Models.UsuarioModel>
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Lista de usuários</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Nome
+        </th>
+        <th>
+            Sobrenome
+        </th>
+        <th>
+            Foto
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.id
+            </td>
+            <td>
+                @item.first_name
+            </td>
+            <td>
+                @item.last_name
+            </td>
+            <td>
+                <div class="item branding">
+                    <img src="@Html.DisplayFor(modelItem => item.avatar)" class="img-responsive" />
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+@*Paginação*@
+
+Page @(Model.PageCount < Model.PageCount ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Listar", new { page }))
