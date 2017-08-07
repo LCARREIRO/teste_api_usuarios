@@ -4,62 +4,70 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using TesteListagemDeUsuarios.Web.Models;
+using TesteListagemDeUsuarios.Dominio.Entidade;
+using TesteListagemDeUsuarios.Dominio.Repositorio;
 
 namespace TesteListagemDeUsuarios.Web.Controllers
 {
     public class UsuarioServiceController : ApiController
     {
-        private readonly UsuarioModel[] Usuarios = new UsuarioModel[]
-        {
-                new UsuarioModel {id = 1, first_name = "george", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg" },
-                new UsuarioModel {id = 2, first_name = "lucille", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg" },
-                new UsuarioModel {id = 3, first_name = "oscar", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg" },
-                new UsuarioModel {id = 4, first_name = "eve", last_name= "holt", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg" },
-                new UsuarioModel {id = 5, first_name = "gob", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/stephenmoon/128.jpg" },
-                new UsuarioModel {id = 6, first_name = "tracey", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/bigmancho/128.jpg" },
-                new UsuarioModel {id = 7, first_name = "michael", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/follettkyle/128.jpg" },
-                new UsuarioModel {id = 8, first_name = "lindsay", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/araa3185/128.jpg" },
-                new UsuarioModel {id = 9, first_name = "tobias", last_name= "funke", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/vivekprvr/128.jpg" },
-                new UsuarioModel {id = 10, first_name = "byron", last_name= "holt", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/russoedu/128.jpg" },
-                new UsuarioModel {id = 11, first_name = "george michael", last_name= "bluth", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/mrmoiree/128.jpg" },
-                new UsuarioModel {id = 12, first_name = "maeby", last_name= "funke", avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg" }
-        };
+
+        private readonly UsuarioRepository repository = new UsuarioRepository();
+        private readonly List<UsuarioModel> Usuarios = new List<UsuarioModel>();
 
         // GET api/usuarioservico
-        public UsuarioModel[] Get()
+        public List<UsuarioModel> Get()
         {
-            foreach (var item in Usuarios)
+            foreach (var usuario in repository.GetAll)
             {
-                int posicao = item.first_name.IndexOf(" ");
+                //Pegando usuarios do banco e passando para as propriedades do objeto usuarioObj
+                var usuarioObj = new UsuarioModel
+                {
+                    id = usuario.id,
+                    first_name = usuario.first_name,
+                    last_name = usuario.last_name,
+                    avatar = usuario.avatar
+                };
 
+                //Pegando a posição do espaço entre o primiro e o segundo nome
+                int posicao = usuarioObj.first_name.IndexOf(" ");
+
+                //Verifica se existe espaço em branco...
                 if (posicao > 0)
                 {
-                    string primNome;
-                    string segNome;
-                    string concatenar;
+                    string primNome, segNome, concatenar;
 
-                    primNome = item.first_name.Substring(0, 1).ToUpper() + item.first_name.Substring(1, posicao);
-                    segNome = item.first_name.Substring(posicao + 1, 1).ToUpper() + item.first_name.Substring(posicao + 2);
+                    //Torna primeira letra do primeiro nome maiuscula e depois a primeira letra do segundo nome
+                    primNome = usuarioObj.first_name.Substring(0, 1).ToUpper() + usuarioObj.first_name.Substring(1, posicao);
+                    segNome = usuarioObj.first_name.Substring(posicao + 1, 1).ToUpper() + usuarioObj.first_name.Substring(posicao + 2);
+
+                    //Concatena o primeiro e segundo nome
                     concatenar = string.Format("{0} {1}", primNome, segNome).ToString();
+                    usuarioObj.first_name = concatenar;
 
-                    item.first_name = concatenar;
-                    item.last_name = item.last_name.Substring(0, 1).ToUpper();
+                    //Torna a primeira letra do sobronome maiuscula
+                    usuarioObj.last_name = usuarioObj.last_name.Substring(0, 1).ToUpper();
                 }
+                //Se não existir espaço em branco...
                 else
                 {
-                    item.first_name = item.first_name.Substring(0, 1).ToUpper() + item.first_name.Substring(1);
-                    item.last_name = item.last_name.Substring(0, 1).ToUpper();
+                    //Torna primeira letra do nome maiuscula e depois a primeira letra do sobrenome
+                    usuarioObj.first_name = usuarioObj.first_name.Substring(0, 1).ToUpper() + usuarioObj.first_name.Substring(1);
+                    usuarioObj.last_name = usuarioObj.last_name.Substring(0, 1).ToUpper();
                 }
+
+                //Adiciona Obj na lista
+                Usuarios.Add(usuarioObj);
             }
+            //Retorna Obj para o metodo GetAll
             return Usuarios;
         }
 
         // GET api/usuarioservice/5
         public UsuarioModel Get(int id)
         {
-            var usuario = Usuarios;
-        
+            var usuario = repository.GetAll;
+
             return usuario.SingleOrDefault(x => x.id == id);
         }
 

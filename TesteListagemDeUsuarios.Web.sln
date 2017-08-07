@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteListagemDeUsuarios.Web", "TesteListagemDeUsuarios.Web\TesteListagemDeUsuarios.Web.csproj", "{15E0FD61-65DF-4EDB-884E-611D4E680BBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteListagemDeUsuarios.Dominio", "TesteListagemDeUsuarios.Dominio\TesteListagemDeUsuarios.Dominio.csproj", "{C6320F86-EBF1-41AF-81BC-AA3D8806231B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{15E0FD61-65DF-4EDB-884E-611D4E680BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E0FD61-65DF-4EDB-884E-611D4E680BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E0FD61-65DF-4EDB-884E-611D4E680BBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6320F86-EBF1-41AF-81BC-AA3D8806231B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6320F86-EBF1-41AF-81BC-AA3D8806231B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6320F86-EBF1-41AF-81BC-AA3D8806231B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6320F86-EBF1-41AF-81BC-AA3D8806231B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace TesteListagemDeUsuarios.Web.Models
+namespace TesteListagemDeUsuarios.Dominio.Entidade
 {
     public class UsuarioModel
     {

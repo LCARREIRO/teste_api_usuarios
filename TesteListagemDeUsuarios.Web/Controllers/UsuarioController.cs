@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using PagedList;
 using RestSharp;
 using System.Configuration;
-using TesteListagemDeUsuarios.Web.Models;
+using TesteListagemDeUsuarios.Dominio.Entidade;
 
 namespace TesteListagemDeUsuarios.Web.Controllers
 {

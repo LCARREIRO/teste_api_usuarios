@@ -1,13 +1,12 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<TesteListagemDeUsuarios.Web.Models.UsuarioModel>
+@model PagedList.IPagedList<TesteListagemDeUsuarios.Dominio.Entidade.UsuarioModel>
 
 @{
     ViewBag.Title = "Listar";
 }
-
 <h2>Lista de usuários</h2>
 
-<table class="table">
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>
             ID
@@ -21,7 +20,6 @@
         <th>
             Foto
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -45,7 +43,13 @@
     }
 </table>
 
-@*Paginação*@
 
-Page @(Model.PageCount < Model.PageCount ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Listar", new { page }))
+@*Paginação*@
+<div>
+    <div>
+        <p class="text-center"><strong>Página @(Model.PageCount < Model.PageCount ? 0 : Model.PageNumber) de @Model.PageCount</strong></p>
+    </div>
+    <div class="text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Listar", new { page }))
+    </div>
+</div>
